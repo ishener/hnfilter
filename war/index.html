@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html ng-app="hnfilter">
+	<head>
+		<meta charset='utf-8'> 
+		<title>HN Filter</title>
+		<meta name="description" content="HN Filter">
+		<link href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,400,700,600' rel='stylesheet' type='text/css'>
+		<link href='style.css' rel='stylesheet' type='text/css'>
+		
+	</head>
+	
+	<body ng-controller="MainCtrl">
+	<div infinite-scroll="loadItems('/items?start=' + cursor)" 
+		 infinite-scroll-immediate-check="false" id="wrapper"
+		 infinite-scroll-disabled='scrollLoad'>
+		<h1>HN Filter</h1>
+	 	<ul id="all-items">
+	 		<li ng-repeat="item in items | filterThem:filtered">
+	 			<a target="_blank" href="{{item.url}}"  
+	 			ng-repeat="word in item.words" ng-click="clicked($event, word)">{{word}} </a>
+	 		</li>
+	 	</ul>
+	 	
+	 	<div  id="filter-ul">
+		 	<h2>Filtered Words:</h2>
+		 	<ul>
+		 		<li ng-repeat="word in filtered">
+		 			{{word}} 
+		 			<a class="remove-x" ng-click="filtered.splice($index, 1)">x</a>
+		 		</li>
+		 	</ul>
+	 	</div>
+	</div>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+		<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.0.6/angular.min.js"></script>
+		<script src="localStorageModule.js"></script>
+		<script src="ng-infinite-scroll.min.js"></script>
+		<script src="app.js"></script>
+	</body>
+</html>
