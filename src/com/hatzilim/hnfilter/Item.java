@@ -11,7 +11,7 @@ import com.googlecode.objectify.annotation.Index;
 @Cache
 public class Item {
 	@Id Long id;
-	@Index String title;
+	@Index String title = "";
 	@Index String url;
 	@Index Date created;
 	
@@ -31,6 +31,10 @@ public class Item {
 
 	public void setTitle(String title) {
 		this.title = title;
+	}
+	
+	public void appendTitle (String title) {
+		this.title += title;
 	}
 
 	public String getUrl() {

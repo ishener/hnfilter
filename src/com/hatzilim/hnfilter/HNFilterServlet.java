@@ -65,13 +65,14 @@ public class HNFilterServlet extends HttpServlet {
         			if (itemExists == null) {
         				ofy().save().entity(item).now();
         			}  
+        		} else if (qName.equalsIgnoreCase("TITLE")) {
+        			btitle = false;
         		}
         	}
          
         	public void characters(char ch[], int start, int length) throws SAXException {
         		if (btitle) {
-        			if (item != null) item.setTitle(new String(ch, start, length));
-        			btitle = false;
+        			if (item != null) item.appendTitle(new String(ch, start, length));
         		}
         		if (bhref) {
         			if (item != null) item.setUrl(new String(ch, start, length));
@@ -94,6 +95,7 @@ public class HNFilterServlet extends HttpServlet {
          
              
               saxParser.parse("http://feeds.feedburner.com/newsyc20?format=xml", handler);
+              
          
          } catch (Exception e) {
            e.printStackTrace();
