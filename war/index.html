@@ -15,7 +15,7 @@
 		 infinite-scroll-disabled='scrollLoad'>
 		<h1>HN Filter <span> - filter HN articles by right-clicking a word in the title</span></h1>
 	 	<ul id="all-items">
-	 		<li ng-repeat="item in items | filterThem:filtered">
+	 		<li ng-repeat="item in items | filterThem:filtered" itemid="{{item.id}}">
 	 			<a target="_blank" href="{{item.url}}"  
 	 			ng-repeat="word in item.words" ng-right-click="clicked($event, word)">{{word}} </a>
 	 		</li>
