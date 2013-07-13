@@ -44,9 +44,12 @@ table {
 
 body {
 	font-family: "Open Sans", Arial, Helvetica;
-	font-size: 16px;
+	font-size: 14px;
 	line-height: 22px;
 	padding: 20px;
+}
+a {
+	text-decoration: none;
 }
 #all-items {
 	max-width: 600px;
@@ -92,4 +95,7 @@ margin: 0 auto;
 }
 .filter-count {
 	font-size: 9px;
+}
+h1 span {
+	font-size: 16px;
 }

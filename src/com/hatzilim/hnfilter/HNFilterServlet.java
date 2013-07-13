@@ -92,6 +92,7 @@ public class HNFilterServlet extends HttpServlet {
          
              };
          
+             
               saxParser.parse("http://feeds.feedburner.com/newsyc20?format=xml", handler);
          
          } catch (Exception e) {
