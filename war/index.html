@@ -17,7 +17,7 @@
 	 	<ul id="all-items">
 	 		<li ng-repeat="item in items | filterThem:filtered">
 	 			<a target="_blank" href="{{item.url}}"  
-	 			ng-repeat="word in item.words" ng-click="clicked($event, word)">{{word}} </a>
+	 			ng-repeat="word in item.words" ng-right-click="clicked($event, word)">{{word}} </a>
 	 		</li>
 	 	</ul>
 	 	
@@ -25,8 +25,9 @@
 		 	<h2>Filtered Words:</h2>
 		 	<ul>
 		 		<li ng-repeat="word in filtered">
-		 			{{word}} 
+		 			{{word[0]}} 
 		 			<a class="remove-x" ng-click="filtered.splice($index, 1)">x</a>
+		 			<span class="filter-count">(filtered {{word[1]}} items)</span>
 		 		</li>
 		 	</ul>
 	 	</div>

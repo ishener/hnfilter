@@ -1,18 +1,3 @@
-var ctrlDown;
-
-$(document).ready(function() {
-    ctrlDown = false;
-    var ctrlKey = 17;
-
-    $(document).keydown(function(e) {
-        if (e.keyCode == ctrlKey) ctrlDown = true;
-        console.log("key down " + e.keyCode);
-    }).keyup(function(e) {
-        if (e.keyCode == ctrlKey) ctrlDown = false;
-        console.log("key up " + e.keyCode);
-    });
-
-});
 
 var app = angular.module("hnfilter", ['LocalStorageModule','infinite-scroll']).config(function($httpProvider){
     delete $httpProvider.defaults.headers.common['X-Requested-With'];
@@ -21,15 +6,19 @@ var app = angular.module("hnfilter", ['LocalStorageModule','infinite-scroll']).c
 app.filter('filterThem', function () {
     return function (items, filters) {
     	if (filters.length == 0) return items;
+    	for (var j=0; j < filters.length; j++) 
+    		filters[j][1] = 0; 
     	var filtered = [];
     	var filteredFound;
         for (var i=0; i < items.length; i++) {
-        	filteredFound = false;
+        	filteredFound = 0;
         	for (var j=0; j < filters.length; j++) {
-            	if ( $.inArray(filters[j], items[i].words) !== -1 )
-            		filteredFound = true
+            	if ( $.inArray(filters[j][0], items[i].words) !== -1 ) {
+            		filteredFound++;
+            		filters[j][1]++;
+            	}
             }
-        	if (!filteredFound)
+        	if (filteredFound == 0)
         		filtered.push(items[i]);
         }
         return filtered;
@@ -46,15 +35,11 @@ app.controller("MainCtrl", function($scope, $http, localStorageService) {
 	
 	
 	$scope.clicked = function(event, word) {
-		if (ctrlDown) {
-			if (event) event.preventDefault();
-			$scope.filtered.push(word);
-			return false;
-		}
+		$scope.filtered.push([word, 0]);
+		return false;
 	};
 	
 	$scope.loadItems = function(url) {
-		console.log("fired: " + url);
 		$scope.scrollLoad = true;
 		$http({method: 'GET', url: url}).
 		  success(function(data, status, headers, config) {
@@ -65,7 +50,6 @@ app.controller("MainCtrl", function($scope, $http, localStorageService) {
 					  data.items[i].words = data.items[i].title.split(' ');
 				  }
 				  $scope.items = $scope.items.concat(data.items);
-				  console.log($scope.items);
 			  }
 		  });
 	}
@@ -75,4 +59,17 @@ app.controller("MainCtrl", function($scope, $http, localStorageService) {
 	}, true);
 	
 	$scope.loadItems('/items');
+});
+
+
+app.directive('ngRightClick', function($parse) {
+    return function(scope, element, attrs) {
+        var fn = $parse(attrs.ngRightClick);
+        element.bind('contextmenu', function(event) {
+            scope.$apply(function() {
+                event.preventDefault();
+                fn(scope, {$event:event});
+            });
+        });
+    };
 });

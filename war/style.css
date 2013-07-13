@@ -57,7 +57,9 @@ list-style: disc;
 }
 #filter-ul {
 	width: 300px;
-	float: right;
+	position: fixed;
+top: 100px;
+right: 30px;
 	background: #dddddd;
 padding: 20px;
 }
@@ -85,4 +87,9 @@ li {
 }
 #wrapper {
 	overflow: hidden;
+	max-width: 1200px;
+margin: 0 auto;
+}
+.filter-count {
+	font-size: 9px;
 }

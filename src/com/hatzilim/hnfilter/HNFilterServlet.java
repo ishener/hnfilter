@@ -1,5 +1,7 @@
 package com.hatzilim.hnfilter;
 
+import static com.googlecode.objectify.ObjectifyService.ofy;
+
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -18,12 +20,11 @@ import org.xml.sax.helpers.DefaultHandler;
 
 import com.googlecode.objectify.ObjectifyService;
 
-import static com.googlecode.objectify.ObjectifyService.ofy;
-
 @SuppressWarnings("serial")
 public class HNFilterServlet extends HttpServlet {
 	public void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws IOException {
+		System.out.println("running fetch");
 		resp.setContentType("text/plain");
 		ObjectifyService.register(Item.class);
             
