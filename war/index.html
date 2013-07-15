@@ -13,6 +13,9 @@
 	<div infinite-scroll="loadItems('/items?start=' + cursor)" 
 		 infinite-scroll-immediate-check="false" id="wrapper"
 		 infinite-scroll-disabled='scrollLoad'>
+		 <p id="floating-thoughts">
+		 	<a href="mailto:moshe@hashworld.co">Thoughts?</a> 
+		 </p>
 		<h1>HN Filter <span> - filter HN articles by right-clicking a word in the title</span></h1>
 	 	<ul id="all-items">
 	 		<li ng-repeat="item in items | filterThem:filtered" itemid="{{item.id}}">
